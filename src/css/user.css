@@ -90,7 +90,8 @@
 
 .button-str:disabled {
   background-color: #cfcfcf;
-  color: #cfcfcf;
+  color: #989898;
+  cursor: no-drop;
 }
 
 .timer {
