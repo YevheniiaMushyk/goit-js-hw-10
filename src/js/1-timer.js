@@ -1,5 +1,9 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
+
 let userSelectedDate;
 const options = {
   enableTime: true,
@@ -8,9 +12,6 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     userSelectedDate = selectedDates[0];
-    if (userSelectedDate.getTime() <= this.defaultDate) {
-      alert('Please choose a date in the future');
-    }
   },
 };
 
@@ -31,11 +32,13 @@ dateSelect.addEventListener('click', () => {
 });
 
 dateSelect.addEventListener('input', () => {
-  // if (userSelectedDate.getTime() > Date.now()) {
-  //   btn.removeAttribute('disabled');
-  //   btn.addEventListener('click', handlstart);
-  // } else {
-  // }
+  if (userSelectedDate.getTime() > Date.now()) {
+    btn.removeAttribute('disabled');
+    btn.addEventListener('click', handlstart);
+  } else {
+    alert('Please choose a date in the future');
+    userSelectedDate = '';
+  }
 });
 
 const handlstart = () => {
