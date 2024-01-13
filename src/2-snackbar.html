@@ -10,6 +10,26 @@
   <body>
     <div class="conteiner">
       <a class="back" href="./index.html">&#10232; Back</a>
+      <form class="form">
+        <label class="form-label">
+          Delay (ms)
+          <input class="form-label-input" type="number" name="delay" required />
+        </label>
+
+        <fieldset class="form-fieldset">
+          <legend class="form-state">State</legend>
+          <label class="form-statelabel">
+            <input type="radio" name="state" value="fulfilled" required />
+            Fulfilled
+          </label>
+          <label class="form-statelabel">
+            <input type="radio" name="state" value="rejected" required />
+            Rejected
+          </label>
+        </fieldset>
+
+        <button class="formbtn" type="submit">Create notification</button>
+      </form>
     </div>
     <script type="module" src="./js/2-snackbar.js"></script>
   </body>

@@ -119,3 +119,77 @@
   text-transform: uppercase;
   letter-spacing: 1.5px;
 }
+
+.form-label,
+.form-state {
+  color: #2e2f42;
+  letter-spacing: 0.64px;
+}
+
+.form-label-input {
+  display: flex;
+  width: 360px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+
+  color: #2e2f42;
+  letter-spacing: 0.64px;
+
+  border: 1px solid #808080;
+  border-radius: 4px;
+  background-color: transparent;
+  padding: 8px 16px;
+
+  transition-property: border-color, color, background-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-label-input:hover {
+  border-color: #000;
+}
+
+.form-label-input:active {
+  border-color: #4e75ff;
+  color: #000;
+}
+
+.form-fieldset {
+  width: 360px;
+  height: 64px;
+  margin: 16px 0 24px;
+
+  border: 1px solid #808080;
+  border-radius: 4px;
+}
+
+.form-statelabel {
+  color: #2e2f42;
+  letter-spacing: 0.64px;
+}
+
+.formbtn {
+  display: flex;
+  width: 360px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  border-radius: 8px;
+  background: #4e75ff;
+
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.64px;
+
+  transition-property: background-color, color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.formbtn:hover {
+  background-color: #6c8cff;
+}
