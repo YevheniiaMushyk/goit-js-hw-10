@@ -5,7 +5,7 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 let userSelectedDate = '';
-const btn = document.querySelector('.button-str');
+const btn = document.querySelector('[data-start]');
 btn.setAttribute('disabled', 'disabled');
 const options = {
   enableTime: true,
@@ -17,7 +17,6 @@ const options = {
 
     if (userSelectedDate.getTime() > Date.now()) {
       btn.removeAttribute('disabled');
-      btn.addEventListener('click', handlstart);
     } else {
       iziToast.error({
         title: 'Error',
@@ -35,46 +34,38 @@ const dataHours = document.querySelector('[data-hours]');
 const dataMinutes = document.querySelector('[data-minutes]');
 const dataSeconds = document.querySelector('[data-seconds]');
 
-const handlstart = () => {
+btn.addEventListener('click', handlestart);
+const handlestart = () => {
   btn.setAttribute('disabled', 'disabled');
   const dateInterval = setInterval(() => {
     const resultDate = userSelectedDate.getTime() - Date.now();
     const currentDate = convertMs(resultDate);
-    const currentDay = currentDate.days;
-    const currentHour = currentDate.hours;
-    const currentMinute = currentDate.minutes;
-    const currentSecond = currentDate.seconds;
 
-    if (currentDay < 10) {
-      dataDays.textContent = addLeadingZero(currentDay);
+    if (currentDate.days < 10) {
+      dataDays.textContent = addLeadingZero(currentDate.days);
     } else {
-      dataDays.textContent = currentDay;
+      dataDays.textContent = currentDate.days;
     }
 
-    if (currentHour < 10) {
-      dataHours.textContent = addLeadingZero(currentHour);
+    if (currentDate.hours < 10) {
+      dataHours.textContent = addLeadingZero(currentDate.hours);
     } else {
-      dataHours.textContent = currentHour;
+      dataHours.textContent = currentDate.hours;
     }
 
-    if (currentMinute < 10) {
-      dataMinutes.textContent = addLeadingZero(currentMinute);
+    if (currentDate.minutes < 10) {
+      dataMinutes.textContent = addLeadingZero(currentDate.minutes);
     } else {
-      dataMinutes.textContent = currentMinute;
+      dataMinutes.textContent = currentDate.minutes;
     }
 
-    if (currentSecond < 10) {
-      dataSeconds.textContent = addLeadingZero(currentSecond);
+    if (currentDate.seconds < 10) {
+      dataSeconds.textContent = addLeadingZero(currentDate.seconds);
     } else {
-      dataSeconds.textContent = currentSecond;
+      dataSeconds.textContent = currentDate.seconds;
     }
 
-    if (
-      currentDay == 0 &&
-      currentHour == 0 &&
-      currentMinute == 0 &&
-      currentSecond == 0
-    ) {
+    if (resultDate <= 0) {
       clearInterval(dateInterval);
       userSelectedDate = '';
     }

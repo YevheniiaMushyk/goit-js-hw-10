@@ -7,10 +7,10 @@ form.addEventListener('submit', onSubmit);
 function onSubmit(event) {
   event.preventDefault();
 
-  const handleDelay = form.elements.delay.value;
-  const handleState = form.elements.state.value;
+  const inputDelay = form.elements.delay.value;
+  const inputState = form.elements.state.value;
 
-  getPromise(handleDelay, handleState)
+  createTimedPromise(inputDelay, inputState)
     .then(value => {
       iziToast.success({
         title: 'OK',
@@ -27,7 +27,7 @@ function onSubmit(event) {
     });
 }
 
-function getPromise(delay, state) {
+function createTimedPromise(delay, state) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (state === 'fulfilled') {
