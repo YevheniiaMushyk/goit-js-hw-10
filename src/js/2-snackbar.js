@@ -7,8 +7,10 @@ form.addEventListener('submit', onSubmit);
 function onSubmit(event) {
   event.preventDefault();
 
-  const inputDelay = form.elements.delay.value;
-  const inputState = form.elements.state.value;
+  const inputDelay = parseInt(form.elements.delay.value);
+  const inputState = Array.from(form.elements.state).find(
+    radio => radio.checked
+  ).value;
 
   createTimedPromise(inputDelay, inputState)
     .then(value => {

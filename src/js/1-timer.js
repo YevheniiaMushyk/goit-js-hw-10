@@ -6,7 +6,13 @@ import 'izitoast/dist/css/iziToast.min.css';
 
 let userSelectedDate = '';
 const btn = document.querySelector('[data-start]');
+const dataDays = document.querySelector('[data-days]');
+const dataHours = document.querySelector('[data-hours]');
+const dataMinutes = document.querySelector('[data-minutes]');
+const dataSeconds = document.querySelector('[data-seconds]');
+
 btn.setAttribute('disabled', 'disabled');
+
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -21,56 +27,37 @@ const options = {
       iziToast.error({
         title: 'Error',
         message: 'Please choose a date in the future',
-        position: 'topRight',
+        position: 'topCenter',
       });
-      userSelectedDate = '';
+
+      dataDays.textContent = '00';
+      dataHours.textContent = '00';
+      dataMinutes.textContent = '00';
+      dataSeconds.textContent = '00';
     }
   },
 };
 flatpickr('#datetime-picker', options);
 
-const dataDays = document.querySelector('[data-days]');
-const dataHours = document.querySelector('[data-hours]');
-const dataMinutes = document.querySelector('[data-minutes]');
-const dataSeconds = document.querySelector('[data-seconds]');
-
-btn.addEventListener('click', handlestart);
-const handlestart = () => {
+const handleButtonClick = () => {
   btn.setAttribute('disabled', 'disabled');
+
   const dateInterval = setInterval(() => {
     const resultDate = userSelectedDate.getTime() - Date.now();
-    const currentDate = convertMs(resultDate);
-
-    if (currentDate.days < 10) {
-      dataDays.textContent = addLeadingZero(currentDate.days);
-    } else {
-      dataDays.textContent = currentDate.days;
-    }
-
-    if (currentDate.hours < 10) {
-      dataHours.textContent = addLeadingZero(currentDate.hours);
-    } else {
-      dataHours.textContent = currentDate.hours;
-    }
-
-    if (currentDate.minutes < 10) {
-      dataMinutes.textContent = addLeadingZero(currentDate.minutes);
-    } else {
-      dataMinutes.textContent = currentDate.minutes;
-    }
-
-    if (currentDate.seconds < 10) {
-      dataSeconds.textContent = addLeadingZero(currentDate.seconds);
-    } else {
-      dataSeconds.textContent = currentDate.seconds;
-    }
-
     if (resultDate <= 0) {
       clearInterval(dateInterval);
-      userSelectedDate = '';
+      return (userSelectedDate = '');
     }
+
+    const currentDate = convertMs(resultDate);
+    dataDays.textContent = addLeadingZero(currentDate.days);
+    dataHours.textContent = addLeadingZero(currentDate.hours);
+    dataMinutes.textContent = addLeadingZero(currentDate.minutes);
+    dataSeconds.textContent = addLeadingZero(currentDate.seconds);
   }, 1000);
 };
+
+btn.addEventListener('click', handleButtonClick);
 
 function convertMs(ms) {
   const second = 1000;
@@ -87,6 +74,5 @@ function convertMs(ms) {
 }
 
 function addLeadingZero(value) {
-  const fullZeroNumber = String(value).padStart(2, '0');
-  return fullZeroNumber;
+  return value < 10 ? String(value).padStart(2, '0') : value;
 }
