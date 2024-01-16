@@ -12,9 +12,8 @@ const dataDays = document.querySelector('[data-days]');
 const dataHours = document.querySelector('[data-hours]');
 const dataMinutes = document.querySelector('[data-minutes]');
 const dataSeconds = document.querySelector('[data-seconds]');
-
+const initialTimer = '00';
 btn.setAttribute('disabled', 'disabled');
-console.log('Block 17');
 
 const options = {
   enableTime: true,
@@ -23,11 +22,9 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     userSelectedDate = selectedDates[0];
-    console.log('вибрали дату в onLose');
 
     if (userSelectedDate.getTime() > Date.now()) {
       btn.removeAttribute('disabled');
-      console.log('Active Btn 30');
     } else {
       iziToast.error({
         title: 'Error',
@@ -35,10 +32,10 @@ const options = {
         position: 'topCenter',
       });
 
-      dataDays.textContent = '00';
-      dataHours.textContent = '00';
-      dataMinutes.textContent = '00';
-      dataSeconds.textContent = '00';
+      dataDays.textContent = addLeadingZero(initialTimer);
+      dataHours.textContent = addLeadingZero(initialTimer);
+      dataMinutes.textContent = addLeadingZero(initialTimer);
+      dataSeconds.textContent = addLeadingZero(initialTimer);
     }
   },
 };
@@ -46,16 +43,14 @@ flatpickr(userInput, options);
 
 const startCountdown = () => {
   btn.setAttribute('disabled', 'disabled');
-  console.log('Block 49');
   userInput.disabled = true;
   const dateInterval = setInterval(() => {
     const resultDate = userSelectedDate.getTime() - Date.now();
     if (resultDate <= 0) {
       clearInterval(dateInterval);
-      console.log('stop Interval 58');
       return (userSelectedDate = '');
     }
-    console.log('counting...');
+
     const currentDate = convertMs(resultDate);
     dataDays.textContent = addLeadingZero(currentDate.days);
     dataHours.textContent = addLeadingZero(currentDate.hours);
@@ -81,5 +76,6 @@ function convertMs(ms) {
 }
 
 function addLeadingZero(value) {
-  return value < 10 ? String(value).padStart(2, '0') : value;
+  const valueToString = String(value);
+  return value < 10 ? valueToString.padStart(2, '0') : valueToString;
 }

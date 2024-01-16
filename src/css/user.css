@@ -63,6 +63,7 @@
   border-color: #808080;
   color: #808080;
   background-color: #fafafa;
+  cursor: no-drop;
 }
 
 .button-str {
