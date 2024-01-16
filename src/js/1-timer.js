@@ -6,12 +6,15 @@ import 'izitoast/dist/css/iziToast.min.css';
 
 let userSelectedDate = '';
 const btn = document.querySelector('[data-start]');
+const userInput = document.getElementById('datetime-picker');
+
 const dataDays = document.querySelector('[data-days]');
 const dataHours = document.querySelector('[data-hours]');
 const dataMinutes = document.querySelector('[data-minutes]');
 const dataSeconds = document.querySelector('[data-seconds]');
 
 btn.setAttribute('disabled', 'disabled');
+console.log('Block 17');
 
 const options = {
   enableTime: true,
@@ -20,9 +23,11 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     userSelectedDate = selectedDates[0];
+    console.log('вибрали дату в onLose');
 
     if (userSelectedDate.getTime() > Date.now()) {
       btn.removeAttribute('disabled');
+      console.log('Active Btn 30');
     } else {
       iziToast.error({
         title: 'Error',
@@ -37,18 +42,20 @@ const options = {
     }
   },
 };
-flatpickr('#datetime-picker', options);
+flatpickr(userInput, options);
 
-const handleButtonClick = () => {
+const startCountdown = () => {
   btn.setAttribute('disabled', 'disabled');
-
+  console.log('Block 49');
+  userInput.disabled = true;
   const dateInterval = setInterval(() => {
     const resultDate = userSelectedDate.getTime() - Date.now();
     if (resultDate <= 0) {
       clearInterval(dateInterval);
+      console.log('stop Interval 58');
       return (userSelectedDate = '');
     }
-
+    console.log('counting...');
     const currentDate = convertMs(resultDate);
     dataDays.textContent = addLeadingZero(currentDate.days);
     dataHours.textContent = addLeadingZero(currentDate.hours);
@@ -57,7 +64,7 @@ const handleButtonClick = () => {
   }, 1000);
 };
 
-btn.addEventListener('click', handleButtonClick);
+btn.addEventListener('click', startCountdown);
 
 function convertMs(ms) {
   const second = 1000;
